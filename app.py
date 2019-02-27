@@ -1,16 +1,7 @@
 from flask import Flask, request, render_template
 import json
 import pandas as pd
-# app = Flask(__name__)
-
-class CustomFlask(Flask):
-    jinja_options = Flask.jinja_options.copy()
-    jinja_options.update(dict(
-        variable_start_string='%%',  # Default is '{{', I'm changing this because Vue.js uses '{{' / '}}'
-        variable_end_string='%%',
-    ))
-
-app = CustomFlask(__name__)  # This replaces your existing "app = Flask(__name__)"
+app = Flask(__name__)
 
 @app.route('/')
 def index():

@@ -25,6 +25,7 @@
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.js') }}"></script>
     <script src="{{ url_for('static', filename='js/datatables.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 
 <body>
@@ -126,20 +127,20 @@
       </thead>
       <tbody>
         <tr class="sr_item" v-for="(data,index) in sr_data" @click="getSRData(data)">
-          <td>{{data.sr_no}}</td>
-          <td>{{data.sr_cate_b}}</td>
-          <td>{{data.sr_cate_m}}</td>
-          <td>{{data.sr_cate_s}}</td>
-          <td>{{data.sr_text}}</td>
-          <td>{{data.act_no}}</td>
-          <td>{{data.act_text}}</td>
-          <td>{{data.prd_cd}}</td>
-          <td>{{data.prd_nm}}</td>
-          <td>{{data.prd_desc}}</td>
-          <td>{{data.ord_cd}}</td>
-          <td>{{data.ord_date}}</td>
-          <td>{{data.ord_status}}</td>
-          <td>{{data.cust_no}}</td>
+          <td>{% raw %}{{data.sr_no}}{% endraw %}</td>
+          <td>{% raw %}{{data.sr_cate_b}}{% endraw %}</td>
+          <td>{% raw %}{{data.sr_cate_m}}{% endraw %}</td>
+          <td>{% raw %}{{data.sr_cate_s}}{% endraw %}</td>
+          <td>{% raw %}{{data.sr_text}}{% endraw %}</td>
+          <td>{% raw %}{{data.act_no}}{% endraw %}</td>
+          <td>{% raw %}{{data.act_text}}{% endraw %}</td>
+          <td>{% raw %}{{data.prd_cd}}{% endraw %}</td>
+          <td>{% raw %}{{data.prd_nm}}{% endraw %}</td>
+          <td>{% raw %}{{data.prd_desc}}{% endraw %}</td>
+          <td>{% raw %}{{data.ord_cd}}{% endraw %}</td>
+          <td>{% raw %}{{data.ord_date}}{% endraw %}</td>
+          <td>{% raw %}{{data.ord_status}}{% endraw %}</td>
+          <td>{% raw %}{{data.cust_no}}{% endraw %}</td>
         </tr>
       </tbody>
     </table>
