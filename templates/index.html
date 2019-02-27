@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="utf-8">
-    <title>sr_confirm_prototype</title>
+  <meta charset="utf-8">
+  <title>sr_confirm_prototype</title>
 
-{#    <!-- <link rel="stylesheet" type="text/css" href="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='css/main.css') }}"/>#}
-{#    <link rel="stylesheet" type="text/css" href="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='css/bootstrap.css') }}"/>#}
-{#    <link rel="stylesheet" type="text/css" href="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='css/bootstrap-grid.css') }}"/>#}
-{#    <link rel="stylesheet" type="text/css" href="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='css/bootstrap-reboot.css') }}"/>#}
-{#    <link rel="stylesheet" type="text/css" href="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='css/datatables.css') }}"/>#}
-{#    <script src="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='js/jquery-3.3.1.js') }}"></script>#}
-{#    <script src="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='js/bootstrap.js') }}"></script>#}
-{#    <script src="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='js/bootstrap.bundle.js') }}"></script>#}
-{#    <script src="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='js/datatables.js') }}"></script>#}
-{#    <script src="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='js/main.js') }}"></script> -->#}
+  {#    <!-- <link rel="stylesheet" type="text/css" href="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='css/main.css') }}"/>#}
+    {#    <link rel="stylesheet" type="text/css" href="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='css/bootstrap.css') }}"/>#}
+    {#    <link rel="stylesheet" type="text/css" href="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='css/bootstrap-grid.css') }}"/>#}
+    {#    <link rel="stylesheet" type="text/css" href="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='css/bootstrap-reboot.css') }}"/>#}
+    {#    <link rel="stylesheet" type="text/css" href="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='css/datatables.css') }}"/>#}
+    {#    <script src="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='js/jquery-3.3.1.js') }}"></script>#}
+    {#    <script src="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='js/bootstrap.js') }}"></script>#}
+    {#    <script src="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='js/bootstrap.bundle.js') }}"></script>#}
+    {#    <script src="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='js/datatables.js') }}"></script>#}
+    {#    <script src="http://genie.gsshop.com/sr_confirm{{ url_for('static', filename='js/main.js') }}"></script> -->#}
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}"/>
@@ -27,174 +27,192 @@
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-</head>
+  </head>
 
-<body>
-  <div class="content" id="app">
-    <div class="container">
-      <br><br>
-      <div class="row navbar-static-top">
-        <h1>sr_confirm_prototype</h1>
-      </div>
+  <body>
+    <div class="content" id="app">
       <div class="container">
-        <table class="table text-center table-striped table-bordered">
-          <thead>
-            <tr class="">
-              <td class="width: 16%">본문</td>
-              <td class="width: 66%">키워드</td>
-              <td class="width: 30%">결과</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>고객</td>
-              <td>
-                <h4>
-                  <span class="badge badge-info">출고완료</span>
-                  <span class="badge badge-info">입고택배-택배</span>
-                  <span class="badge badge-info">완전매입상품</span>
-                  <span class="badge badge-primary">사이즈</span>
-                </h4>
-              </td>
-              <td rowspan="3">
-                <h6><button type="button" class="btn btn-secondary btn-lg">사이즈 선택문의</button>76%</h6>
-                <h6><button type="button" class="btn btn-secondary btn-lg">상세 사이즈 문의</button>15%</h6>
-                <h6><button type="button" class="btn btn-secondary btn-lg">사이즈 표기 문의</button>1%</h6>
-              </td>
+        <br><br>
+        <div class="row navbar-static-top">
+          <h1>sr_confirm_prototype</h1>
+        </div>
+        <div class="container">
+          <table class="table text-center table-striped table-bordered">
+            <thead>
+              <tr class="">
+                <td class="width: 16%">본문</td>
+                <td class="width: 66%">키워드</td>
+                <td class="width: 30%">결과</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>고객</td>
+                <td>
+                  <h4>
+                    <span class="badge badge-info">출고완료</span>
+                    <span class="badge badge-info">입고택배-택배</span>
+                    <span class="badge badge-info">완전매입상품</span>
+                    <span class="badge badge-primary">사이즈</span>
+                  </h4>
+                </td>
+                <td rowspan="3">
+                  <h6><button type="button" class="btn btn-secondary btn-lg">사이즈 선택문의</button>76%</h6>
+                  <h6><button type="button" class="btn btn-secondary btn-lg">상세 사이즈 문의</button>15%</h6>
+                  <h6><button type="button" class="btn btn-secondary btn-lg">사이즈 표기 문의</button>1%</h6>
+                </td>
 
-            </tr>
-            <tr>
-              <td>GS</td>
-              <td>
-                <h4>
-                  <span class="badge badge-primary">남여공용</span>
-                  <span class="badge badge-primary">여유</span>
-                  <span class="badge badge-primary">출시</span>
-                  <span class="badge badge-primary">중간</span>
-                  <span class="badge badge-primary">사이즈</span>
-                  <span class="badge badge-primary">크</span>
-                  <span class="badge badge-primary">선택</span>
-                </h4>
-              </td>
-            </tr>
-            <tr>
-              <td>text</td>
-              <td>@고객 : &lt;출고완료&gt;&lt;입고택배-택배&gt;&lt;;완전매입상품&gt;사이즈문의@GS : 남여공용으로 여유있게 출시 되었으니 중간 사이즈인 경우 크게 선택해주세요</td>
-            </tr>
-          </tbody>
-        </table>
+              </tr>
+              <tr>
+                <td>GS</td>
+                <td>
+                  <h4>
+                    <span class="badge badge-primary">남여공용</span>
+                    <span class="badge badge-primary">여유</span>
+                    <span class="badge badge-primary">출시</span>
+                    <span class="badge badge-primary">중간</span>
+                    <span class="badge badge-primary">사이즈</span>
+                    <span class="badge badge-primary">크</span>
+                    <span class="badge badge-primary">선택</span>
+                  </h4>
+                </td>
+              </tr>
+              <tr>
+                <td>text</td>
+                <td>@고객 : &lt;출고완료&gt;&lt;입고택배-택배&gt;&lt;;완전매입상품&gt;사이즈문의@GS : 남여공용으로 여유있게 출시 되었으니 중간 사이즈인 경우 크게 선택해주세요</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <form action="" method="post" enctype="multipart/form-data" id="upload_form">
+            <input type="file" name="userfile" class="file_input"/>
+            <button class="submit">파일 전송</button>
+          </form>
+
+          <button class="btn">테스트</button>
+        </div>
+
+        <sr-component :sr_data="sr_data"></sr-component>
       </div>
-      <div>
-        <!-- <form action="/test" method="post" enctype="multipart/form-data">
-          <input type="file" />
-          <input type="text" name="test">
-          <input type="submit">
-        </form> -->
-
-        <button class="btn">테스트</button>
+      <br><br><br>
+      <div class="container">
+        <h2 class="row text-center">
+          <span class="col"><button type="button" class="btn btn-light btn-lg"> << prev </button></span>
+          <span class="col"></span>
+          <span class="col"><button type="button" class="btn btn-light btn-lg"> >> next </button></span>
+        </h2>
       </div>
-
-      <sr-component :sr_data="sr_data"></sr-component>
+      <div id="coloured_text" class="display-none"></div>
     </div>
-    <br><br><br>
-    <div class="container">
-      <h2 class="row text-center">
-        <span class="col"><button type="button" class="btn btn-light btn-lg"> << prev </button></span>
-        <span class="col"></span>
-        <span class="col"><button type="button" class="btn btn-light btn-lg"> >> next </button></span>
-      </h2>
-    </div>
-    <div id="coloured_text" class="display-none"></div>
-  </div>
-  <template id="srTemplate">
-    <table id="example" class="">
-      <thead>
-        <tr>
-          <td>sr_no</td>
-          <td>sr_cate_b</td>
-          <td>sr_cate_m</td>
-          <td>sr_cate_s</td>
-          <td>sr_text</td>
-          <td>act_no</td>
-          <td>act_text</td>
-          <td>prd_cd</td>
-          <td>prd_nm</td>
-          <td>prd_desc</td>
-          <td>ord_cd</td>
-          <td>ord_date</td>
-          <td>ord_status</td>
-          <td>cust_no</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="sr_item" v-for="(data,index) in sr_data" @click="getSRData(data)">
-          <td>{% raw %}{{data.sr_no}}{% endraw %}</td>
-          <td>{% raw %}{{data.sr_cate_b}}{% endraw %}</td>
-          <td>{% raw %}{{data.sr_cate_m}}{% endraw %}</td>
-          <td>{% raw %}{{data.sr_cate_s}}{% endraw %}</td>
-          <td>{% raw %}{{data.sr_text}}{% endraw %}</td>
-          <td>{% raw %}{{data.act_no}}{% endraw %}</td>
-          <td>{% raw %}{{data.act_text}}{% endraw %}</td>
-          <td>{% raw %}{{data.prd_cd}}{% endraw %}</td>
-          <td>{% raw %}{{data.prd_nm}}{% endraw %}</td>
-          <td>{% raw %}{{data.prd_desc}}{% endraw %}</td>
-          <td>{% raw %}{{data.ord_cd}}{% endraw %}</td>
-          <td>{% raw %}{{data.ord_date}}{% endraw %}</td>
-          <td>{% raw %}{{data.ord_status}}{% endraw %}</td>
-          <td>{% raw %}{{data.cust_no}}{% endraw %}</td>
-        </tr>
-      </tbody>
-    </table>
-  </template>
+    <template id="srTemplate">
+      <table id="example" class="">
+        <thead>
+          <tr>
+            <td>sr_no</td>
+            <td>sr_cate_b</td>
+            <td>sr_cate_m</td>
+            <td>sr_cate_s</td>
+            <td>sr_text</td>
+            <td>act_no</td>
+            <td>act_text</td>
+            <td>prd_cd</td>
+            <td>prd_nm</td>
+            <td>prd_desc</td>
+            <td>ord_cd</td>
+            <td>ord_date</td>
+            <td>ord_status</td>
+            <td>cust_no</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="sr_item" v-for="(data,index) in sr_data" @click="getSRData(data)">
+            <td>{% raw %}{{data.sr_no}}{% endraw %}</td>
+            <td>{% raw %}{{data.sr_cate_b}}{% endraw %}</td>
+            <td>{% raw %}{{data.sr_cate_m}}{% endraw %}</td>
+            <td>{% raw %}{{data.sr_cate_s}}{% endraw %}</td>
+            <td>{% raw %}{{data.sr_text}}{% endraw %}</td>
+            <td>{% raw %}{{data.act_no}}{% endraw %}</td>
+            <td>{% raw %}{{data.act_text}}{% endraw %}</td>
+            <td>{% raw %}{{data.prd_cd}}{% endraw %}</td>
+            <td>{% raw %}{{data.prd_nm}}{% endraw %}</td>
+            <td>{% raw %}{{data.prd_desc}}{% endraw %}</td>
+            <td>{% raw %}{{data.ord_cd}}{% endraw %}</td>
+            <td>{% raw %}{{data.ord_date}}{% endraw %}</td>
+            <td>{% raw %}{{data.ord_status}}{% endraw %}</td>
+            <td>{% raw %}{{data.cust_no}}{% endraw %}</td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
 
-  <script>
-  $(document).ready(function(){
-    $('.btn').click(function(){
-      $.ajax({
-        url: "/uploadResult",
-        type: "POST",
-        success: function(data){
-          let result = JSON.parse(data);
-          clist.sr_data = result;
-          console.log(clist.sr_data);
-        },
-        error: function(err){
-          console.log(err);
-        }
-      })
-    })
-  });
-
-
-  let clist = new Vue({
-    el : "#app",
-    data : {
-      sr_data : [],
-    }
-  })
-
-  Vue.component('sr-component',{
-    template : "#srTemplate",
-    props : ['sr_data'],
-    methods : {
-      getSRData : function(data){
-        let sr_no = data.sr_no;
+    <script>
+    $(document).ready(function(){
+      $('.btn').click(function(){
         $.ajax({
-          url: "/getSr",
+          url: "127.0.0.1:5000/upload",
           type: "POST",
-          data : {sr_no : sr_no},
-          dataType : 'json',
           success: function(data){
-            console.log(data);
+            let result = JSON.parse(data);
+            clist.sr_data = result;
+            console.log(clist.sr_data);
           },
           error: function(err){
+            console.log('');
             console.log(err);
           }
         })
+      })
+
+      $('.submit').click(function(){
+        var form = $('#upload_form')[0];
+        var formData = new FormData(form);
+        formData.append("fileObj", $(".file_input")[0].files[0]);
+
+        $.ajax({
+          url: "{{ url_for('upload') }}",
+          processData: false,
+          contentType: false,
+          data: formData,
+          type: 'POST',
+          success: function(result){
+            console.log(result);
+          }
+        });
+
+      })
+    });
+
+
+    let clist = new Vue({
+      el : "#app",
+      data : {
+        sr_data : [],
       }
-    }
-  });
-</script>
+    })
+
+    Vue.component('sr-component',{
+      template : "#srTemplate",
+      props : ['sr_data'],
+      methods : {
+        getSRData : function(data){
+          let sr_no = data.sr_no;
+          $.ajax({
+            url: "/getSr",
+            type: "POST",
+            data : {sr_no : sr_no},
+            dataType : 'json',
+            success: function(data){
+              console.log(data);
+            },
+            error: function(err){
+              console.log(err);
+            }
+          })
+        }
+      }
+    });
+  </script>
 
 </body>
 </html>
