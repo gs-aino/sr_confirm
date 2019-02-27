@@ -104,46 +104,46 @@
     </div>
     <div id="coloured_text" class="display-none"></div>
   </div>
-{#  <template id="srTemplate">#}
-{#    <table id="example" class="">#}
-{#      <thead>#}
-{#        <tr>#}
-{#          <td>sr_no</td>#}
-{#          <td>sr_cate_b</td>#}
-{#          <td>sr_cate_m</td>#}
-{#          <td>sr_cate_s</td>#}
-{#          <td>sr_text</td>#}
-{#          <td>act_no</td>#}
-{#          <td>act_text</td>#}
-{#          <td>prd_cd</td>#}
-{#          <td>prd_nm</td>#}
-{#          <td>prd_desc</td>#}
-{#          <td>ord_cd</td>#}
-{#          <td>ord_date</td>#}
-{#          <td>ord_status</td>#}
-{#          <td>cust_no</td>#}
-{#        </tr>#}
-{#      </thead>#}
-{#      <tbody>#}
-{#        <tr class="sr_item" v-for="(data,index) in sr_data" @click="getSRData(data)">#}
-{#          <td>{{data.sr_no}}</td>#}
-{#          <td>{{data.sr_cate_b}}</td>#}
-{#          <td>{{data.sr_cate_m}}</td>#}
-{#          <td>{{data.sr_cate_s}}</td>#}
-{#          <td>{{data.sr_text}}</td>#}
-{#          <td>{{data.act_no}}</td>#}
-{#          <td>{{data.act_text}}</td>#}
-{#          <td>{{data.prd_cd}}</td>#}
-{#          <td>{{data.prd_nm}}</td>#}
-{#          <td>{{data.prd_desc}}</td>#}
-{#          <td>{{data.ord_cd}}</td>#}
-{#          <td>{{data.ord_date}}</td>#}
-{#          <td>{{data.ord_status}}</td>#}
-{#          <td>{{data.cust_no}}</td>#}
-{#        </tr>#}
-{#      </tbody>#}
-{#    </table>#}
-{#  </template>#}
+  <template id="srTemplate">
+    <table id="example" class="">
+      <thead>
+        <tr>
+          <td>sr_no</td>
+          <td>sr_cate_b</td>
+          <td>sr_cate_m</td>
+          <td>sr_cate_s</td>
+          <td>sr_text</td>
+          <td>act_no</td>
+          <td>act_text</td>
+          <td>prd_cd</td>
+          <td>prd_nm</td>
+          <td>prd_desc</td>
+          <td>ord_cd</td>
+          <td>ord_date</td>
+          <td>ord_status</td>
+          <td>cust_no</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="sr_item" v-for="(data,index) in sr_data" @click="getSRData(data)">
+          <td>{{data.sr_no}}</td>
+          <td>{{data.sr_cate_b}}</td>
+          <td>{{data.sr_cate_m}}</td>
+          <td>{{data.sr_cate_s}}</td>
+          <td>{{data.sr_text}}</td>
+          <td>{{data.act_no}}</td>
+          <td>{{data.act_text}}</td>
+          <td>{{data.prd_cd}}</td>
+          <td>{{data.prd_nm}}</td>
+          <td>{{data.prd_desc}}</td>
+          <td>{{data.ord_cd}}</td>
+          <td>{{data.ord_date}}</td>
+          <td>{{data.ord_status}}</td>
+          <td>{{data.cust_no}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </template>
 
   <script>
   $(document).ready(function(){
