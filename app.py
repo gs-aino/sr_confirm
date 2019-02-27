@@ -8,7 +8,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/upload', methods=['POST'])
+@app.route('/upload', methods=['GET', 'POST'])
 def upload():
     f = request.files['userfile']
     f.save('./'+f.filename)
