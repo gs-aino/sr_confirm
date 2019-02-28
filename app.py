@@ -37,20 +37,20 @@ def sr_analysis_info():
 
     any_dict = {
         "sr_no": "",
-        "sr_act_text": "고객 : \nGS: ",
-        "kwd_cust_origin": [],
-        "kwd_cust_confirm": [],
-        "kwd_gs_origin": [],
-        "kwd_gs_confirm": [],
+        "sr_act_text": "고객 : abc\nGS: 123",
+        "kwd_cust_origin": ["a", "b", "c"],
+        "kwd_cust_confirm": ["a", "b", "c"],
+        "kwd_gs_origin": ["1", "2", "3"],
+        "kwd_gs_confirm": ["1", "2", "3"],
         "kwd_changed": False,
-        "tag_first_name": "",
+        "tag_first_name": "111",
         "tag_first_prob": 25.6,
-        "tag_second_name": "",
+        "tag_second_name": "222",
         "tag_second_prob": 2.3,
-        "tag_third_name": "",
+        "tag_third_name": "333",
         "tag_third_prob": 0.1,
         "tag_confirm": 0.1,
-        "tag_changed": False,
+        "tag_changed": False
     }
     return json.dumps(any_dict)
 
