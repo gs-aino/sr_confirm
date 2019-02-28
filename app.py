@@ -1,3 +1,4 @@
+#coding: utf8
 from flask import Flask, request, render_template
 import json
 import pandas as pd
@@ -29,9 +30,9 @@ def upload():
     return df.to_json(orient='records')
 
 
-@app.route('/sr_analysis_info', methods=['GET'])
+@app.route('/sr_analysis_info', methods=['GET', 'POST'])
 def sr_analysis_info():
-    sr_no = request.json['sr_no']
+    # sr_no = request.json['sr_no']
 
     #TODO df에서 해당 sr찾는 작업
 
