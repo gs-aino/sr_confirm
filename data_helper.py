@@ -1,9 +1,26 @@
 import pandas as pd
 import re
+import os.path
 
+from os import listdir
+from os.path import isfile, join
 act_cate_list = ['고객 Outbound', '모바일 Outbound', 'SMS발송', '메일 Outbound', 'Email - Outbound', '기타 Outbound',
                  '채널 자동답변(OB)']
 sr_act_dict = {}
+
+
+def load_stored_df(df_cols):
+
+    df_path = './data/df_database/'
+    # df_file_names = [f for f in listdir(df_path) if isfile(join(df_path, f))]
+    df_file_names = [f for f in listdir(df_path)]
+    if df_file_names:
+        sorted(df_file_names)
+        df_file_name = df_file_names[-1]
+        df = pd.read_pickle(df_path+df_file_name)
+    else:
+        df = pd.DataFrame(columns=df_cols)
+    return df
 
 def raw_file_to_df(file_path):
     df = pd.read_csv(file_path, sep='\t')
