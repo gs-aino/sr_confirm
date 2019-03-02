@@ -5,6 +5,9 @@ import pandas as pd
 import sys
 import os.path
 from data_helper import *
+from es_helper import *
+from model_helper import *
+
 app = Flask(__name__)
 
 database_cols = ["sr_no", "sr_act_text", "kwd_cust_origin", "kwd_cust_confirm", "kwd_gs_origin", "kwd_gs_confirm",
@@ -40,7 +43,7 @@ def upload():
     # TODO df tag 추출
     # TODO 추출결과 별도의 df에 저장 pk(index == sr_no)
 
-    # df_es =
+    df_es = get_analysed_keywords(df_temp['sr_no', 'customer_text', 'gs_text'])
 
 
     return df_datatable.to_html()
