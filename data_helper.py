@@ -1,9 +1,9 @@
 import pandas as pd
 import re
 import os.path
-
 from os import listdir
 from os.path import isfile, join
+
 act_cate_list = ['고객 Outbound', '모바일 Outbound', 'SMS발송', '메일 Outbound', 'Email - Outbound', '기타 Outbound',
                  '채널 자동답변(OB)']
 sr_act_dict = {}
@@ -21,6 +21,7 @@ def load_stored_df(df_cols):
     else:
         df = pd.DataFrame(columns=df_cols)
     return df
+
 
 def raw_file_to_df(file_path):
     df = pd.read_csv(file_path, sep='\t')
