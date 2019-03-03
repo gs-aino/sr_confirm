@@ -38,7 +38,7 @@ def get_analysed_keywords(df_raw):
     print("count: {}".format(count))
 
     results = list()
-    results.append(es.search(index=config['ES_INDEX_NAME'], size=10000, scroll='1m'))
+    results.append(es.search(index=es_config['ES_INDEX_NAME'], size=10000, scroll='1m'))
     scroll_id = results[0]['_scroll_id']
     data = [_get_necessary_data(result['_source']) for result in results[0]['hits']['hits']]
     del results
@@ -56,14 +56,6 @@ def get_analysed_keywords(df_raw):
     print('''convert to dataframe''')
     df_es = pd.DataFrame(data)
     del data
-
-    df_es.sr_no = df_es.sr_no.astype('str')
-    # df.to_pickle('df_temp_text.pkl')
-
-    # df = pd.read_pickle('df_temp_text.pkl')
-    df_es['customer_terms'] = None
-    df_es['gs_terms'] = None
-    df_es = df_es.set_index('sr_no')
 
     df_es.sr_no = df_es.sr_no.astype('str')
     # df.to_pickle('df_temp_text.pkl')

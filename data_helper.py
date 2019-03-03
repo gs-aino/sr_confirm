@@ -24,12 +24,17 @@ def load_stored_df(df_cols):
 
 
 def raw_file_to_df(file_path):
+    global sr_act_dict
     df = pd.read_csv(file_path, sep='\t')
 
     #TODO 모든 column명 특히 한글에 대응하도록 reindex로 추후 바꿔야함
-    df.columns = ['sr_no', 'sr_area', 'sr_channel', 'sr_cate_b', 'sr_cate_m', 'sr_cate_s', 'sr_text',
-                  'act_no', 'act_text', 'act_status', 'act_cate', 'supp_ques',
-                  'ord_cd', 'ord_status', 'ord_date', 'supp_cd', 'supp_nm', 'prd_cd', 'prd_nm', 'prd_desc']
+    # print(df.head())
+    print(df.columns.tolist())
+
+    df.columns = ['sr_no', 'sr_area', 'sr_channel', 'sr_cate_b', 'sr_cate_m', 'sr_cate_s', 'sr_text', 'ord_status', 'act_no',
+     'act_text', 'act_status', 'act_cate', 'supp_ques', 'prd_cd', 'prd_nm', 'prd_desc', 'ord_cd', 'ord_date', 'supp_cd',
+     'supp_nm']
+
 
     df = df[['sr_no', 'sr_area', 'sr_channel', 'sr_cate_b', 'sr_cate_m', 'sr_cate_s', 'sr_text', 'ord_status',
              'act_no', 'act_text', 'act_status', 'act_cate', 'supp_ques',
@@ -54,6 +59,10 @@ def raw_file_to_df(file_path):
     df['supp_nm'] = df['supp_nm'].apply(lambda string: _remove_single_quotation(string))
     df['supp_ques'] = df['supp_ques'].apply(lambda string: _remove_single_quotation(string))
 
+    df['sr_cate'] = None
+    df['sr_cate'] = df.apply(lambda row: _make_sr_cate(row), axis=1)
+
+
     #TODO 활동번호가 아니라 활동시간으로 변경
     df = df.sort_values(['sr_no', 'act_no']).reset_index(drop=True)
 
@@ -64,10 +73,11 @@ def raw_file_to_df(file_path):
 
     df = df.apply(lambda row: _extract_customer_text_from_question_ver3(row), axis=1)
     df = df.apply(lambda row: _extract_gs_text_from_question_ver2(row, df), axis=1)
-    del sr_act_dict
 
     df['customer_text'] = df.customer_text.apply(lambda x: _cleansing_raw_text_by_char_ver2(x))
     df['gs_text'] = df.gs_text.apply(lambda x: _cleansing_raw_text_by_char_ver2(x))
+
+    del sr_act_dict
 
     return df
 
@@ -80,6 +90,11 @@ def _remove_single_quotation(string):
         new_string = re.sub(pattern = "(^'|'$)", repl="", string=str(string))
     finally:
         return new_string.strip()
+
+
+def _make_sr_cate(row):
+    row['sr_cate'] = 'b : ' + row['sr_cate_b'] + '\nm : ' + row['sr_cate_m'] + '\ns : ' + row['sr_cate_s']
+    return row['sr_cate']
 
 
 def _check_start_with_ver2(x, compare_string_list: list):
@@ -146,6 +161,7 @@ def _extract_customer_text_from_question_ver3(row):
 
 
 def _extract_gs_text_from_question_ver2(row, df):
+    global sr_act_dict
     string = row['sr_text']
     if row['sr_start_type'] == 'call_type_customer':
         try:
