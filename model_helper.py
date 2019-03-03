@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from itertools import chain
 import pickle
+import numpy as np
 
 # df_y = pd.read_csv('./y_0301.dat', sep='\t')
 # df_y.columns = ['sr_media', 'cust_no', 'sr_no', 'sr_month', 'sr_type', 'sr_b', 'sr_b_cd', 'sr_m', 'prd_cate_m','sr_m_cd', 'sr_s', 'sr_s_cd',
@@ -34,30 +35,32 @@ def get_tags_and_prob(df):
     X_cust, X_gs, X = _make_dataset(df)
     model = _load_model()
     y_prob = model.predict_proba(X)
+    result = _get_tags_and_prob(y_prob)
 
     df_tags = pd.DataFrame(df['sr_no'])
-    df_tags["tag_first_name"] = None
-    df_tags["tag_first_prob"] = None
-    df_tags["tag_second_name"] = None
-    df_tags["tag_second_prob"] = None
-    df_tags["tag_third_name"] = None
-    df_tags["tag_third_prob"] = None
-    df_tags[["tag_first_name", "tag_first_prob", "tag_second_name", "tag_second_prob", "tag_third_name", "tag_third_prob"]] = _get_tags_and_prob(y_prob)
+    df_tags["tag_first_name"] = result[:, 0]
+    df_tags["tag_first_prob"] = result[:, 1]
+    df_tags["tag_second_name"] = result[:, 2]
+    df_tags["tag_second_prob"] = result[:, 3]
+    df_tags["tag_third_name"] = result[:, 4]
+    df_tags["tag_third_prob"] = result[:, 5]
+    # df_tags[["tag_first_name", "tag_first_prob", "tag_second_name", "tag_second_prob", "tag_third_name", "tag_third_prob"]]
+
     return df_tags
 
 
 def _get_tags_and_prob(y_prob):
     y_pred = [y.argsort()[-3:][::-1] for y in y_prob]
-    y = [(y_dict[l[0]], y_prob[l[0]], y_dict[l[1]], y_prob[l[1]], y_dict[l[2]], y_prob[l[2]]) for l in y_pred]
-    return y
+    y = [[y_dict[l[0]], y_prob[l[0]], y_dict[l[1]], y_prob[l[1]], y_dict[l[2]], y_prob[l[2]]] for l in y_pred]
+    return np.array(y, dtype=object)
 
 
 def _load_vectorizers():
-    with open(model_config['cust_vectorizer_path']) as f:
+    with open(model_config['cust_vectorizer_path'], 'rb') as f:
         cust_vectorizer = pickle.load(f)
-    with open(model_config['gs_vectorizer_path']) as f:
+    with open(model_config['gs_vectorizer_path'], 'rb') as f:
         gs_vectorizer = pickle.load(f)
-    with open(model_config['vectorizer_path']) as f:
+    with open(model_config['vectorizer_path'], 'rb') as f:
         vectorizer = pickle.load(f)
 
     return cust_vectorizer, gs_vectorizer, vectorizer
@@ -72,10 +75,10 @@ def _make_dataset(df):
     X_cust = cust_vectorizer.transform(customer_corpus)
     X_gs = gs_vectorizer.transform(gs_corpus)
     X = vectorizer.transform(corpus)
-    return X_cust, X_gs, X
+    return X_cust.toarray(), X_gs.toarray(), X.toarray()
 
 
 def _load_model():
-    with open(model_config['model_path']) as f:
+    with open(model_config['model_path'], 'rb') as f:
         model = pickle.load(f)
     return model

@@ -23,7 +23,7 @@ def load_stored_df(df_cols):
     return df
 
 
-def raw_file_to_df(file_path):
+def raw_file_to_df(file_path, sr_cate_b_filter):
     global sr_act_dict
     df = pd.read_csv(file_path, sep='\t')
 
@@ -59,14 +59,17 @@ def raw_file_to_df(file_path):
     df['supp_nm'] = df['supp_nm'].apply(lambda string: _remove_single_quotation(string))
     df['supp_ques'] = df['supp_ques'].apply(lambda string: _remove_single_quotation(string))
 
-    df['sr_cate'] = None
-    df['sr_cate'] = df.apply(lambda row: _make_sr_cate(row), axis=1)
+    # df['sr_cate'] = None
+    # df['sr_cate'] = df.apply(lambda row: _make_sr_cate(row), axis=1)
 
 
     #TODO 활동번호가 아니라 활동시간으로 변경
     df = df.sort_values(['sr_no', 'act_no']).reset_index(drop=True)
 
     df['sr_start_type'] = df.sr_text.apply(lambda x: _sr_start_type(x))
+
+    #TODO filter 제거
+    df = df.loc[df.sr_cate_b.isin(sr_cate_b_filter)].reset_index(drop=True)
 
     df["customer_text"] = ""
     df["gs_text"] = ""
@@ -78,7 +81,7 @@ def raw_file_to_df(file_path):
     df['gs_text'] = df.gs_text.apply(lambda x: _cleansing_raw_text_by_char_ver2(x))
 
     del sr_act_dict
-
+    df = df.drop_duplicates(['sr_no']).reset_index(drop=True)
     return df
 
 
