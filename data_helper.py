@@ -27,13 +27,16 @@ def raw_file_to_df(file_path, sr_cate_b_filter):
     global sr_act_dict
     df = pd.read_csv(file_path, sep='\t')
 
-    #TODO 모든 column명 특히 한글에 대응하도록 reindex로 추후 바꿔야함
-    # print(df.head())
-    # print(df.columns.tolist())
+    print(df.head())
+    print(df.columns.tolist())
 
-    df.columns = ['sr_no', 'sr_area', 'sr_channel', 'sr_cate_b', 'sr_cate_m', 'sr_cate_s', 'sr_text', 'ord_status', 'act_no',
-     'act_text', 'act_status', 'act_cate', 'supp_ques', 'prd_cd', 'prd_nm', 'prd_desc', 'ord_cd', 'ord_date', 'supp_cd',
-     'supp_nm']
+    #TODO 모든 column명 특히 한글에 대응하도록 reindex로 추후 바꿔야함
+    #
+    #
+
+    df.columns = ['sr_no', 'sr_area', 'sr_channel', 'sr_cate_b', 'sr_cate_m', 'sr_cate_s', 'sr_text', 'act_no',
+     'act_text', 'act_status', 'act_cate', 'supp_ques', 'ord_cd', 'ord_status', 'ord_date', 'supp_cd',
+     'supp_nm', 'prd_cd', 'prd_nm', 'prd_desc']
 
 
     df = df[['sr_no', 'sr_area', 'sr_channel', 'sr_cate_b', 'sr_cate_m', 'sr_cate_s', 'sr_text', 'ord_status',
