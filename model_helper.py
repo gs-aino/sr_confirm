@@ -4,13 +4,6 @@ from itertools import chain
 import pickle
 import numpy as np
 
-# df_y = pd.read_csv('./y_0301.dat', sep='\t')
-# df_y.columns = ['sr_media', 'cust_no', 'sr_no', 'sr_month', 'sr_type', 'sr_b', 'sr_b_cd', 'sr_m', 'prd_cate_m','sr_m_cd', 'sr_s', 'sr_s_cd',
-#               'prd_cd', 'prd_nm', 'prd_item', 'supp_cd', 'supp_nm', 'num_inq', 'sr_text', 'y_val', 'etc']
-
-# df_y = df_y[['sr_no','sr_type', 'sr_m', 'sr_m_cd', 'sr_s', 'sr_s_cd', 'supp_cd', 'supp_nm', 'sr_text', 'y_val']]
-# df_y['prd_cate_m'].unique()
-
 model_dir = './data/model/'
 model_config = {
     'cust_vectorizer_path' : model_dir + 'cust_vectorizer.pkl',
@@ -79,16 +72,16 @@ def _load_vectorizers():
     return cust_vectorizer, gs_vectorizer, vectorizer
 
 
-def _make_dataset(df):
-    customer_corpus = df.customer_terms.tolist()
-    gs_corpus = df.gs_terms.tolist()
-    corpus = [x + y for x, y in zip(customer_corpus, gs_corpus)]
-
-    cust_vectorizer, gs_vectorizer, vectorizer = _load_vectorizers()
-    X_cust = cust_vectorizer.transform(customer_corpus)
-    X_gs = gs_vectorizer.transform(gs_corpus)
-    X = vectorizer.transform(corpus)
-    return X_cust.toarray(), X_gs.toarray(), X.toarray()
+# def _make_dataset(df):
+#     customer_corpus = df.customer_terms.tolist()
+#     gs_corpus = df.gs_terms.tolist()
+#     corpus = [x + y for x, y in zip(customer_corpus, gs_corpus)]
+#
+#     cust_vectorizer, gs_vectorizer, vectorizer = _load_vectorizers()
+#     X_cust = cust_vectorizer.transform(customer_corpus)
+#     X_gs = gs_vectorizer.transform(gs_corpus)
+#     X = vectorizer.transform(corpus)
+#     return X_cust.toarray(), X_gs.toarray(), X.toarray()
 
 
 def _load_model():

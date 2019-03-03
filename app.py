@@ -9,15 +9,13 @@ app = Flask(__name__)
 database_cols = ["sr_no", "kwd_cust_origin", "kwd_cust_confirm", "kwd_gs_origin", "kwd_gs_confirm",
            "kwd_changed", "tag_first_name", "tag_first_prob", "tag_second_name", "tag_second_prob", "tag_third_name",
            "tag_third_prob", "tag_confirm", "tag_changed"]
-# sr_no --> index
 pd.set_option('display.max_colwidth', -1)
 
 
 #TODO consider stored date
 df_database = load_stored_df(database_cols)
-# df_database = df_database.reset_index()
 
-datatable_cols = ["sr_no", "sr_cate_b", "sr_cate_m", "sr_cate_s", "sr_text", "act_text",
+datatable_cols = ["sr_no", "sr_cate_b", "sr_cate_m", "sr_cate_s", "sr_text", # "act_text",
         "prd_cd", "prd_nm", "prd_desc", "ord_cd", "ord_date", "ord_status"]
 
 old_width = pd.get_option('display.max_colwidth')
@@ -33,29 +31,11 @@ def sr_analysis_info():
     sr_no = request.data.decode('utf-8')
     print('sr_no', sr_no)
 
-    # print(df_database.loc[df_database.sr_no == sr_no, :].to_dict(orient='record'))
     any_dict = df_database.loc[df_database.sr_no == sr_no, :].to_dict(orient='record')[0]
     print('any_dict', json.dumps(any_dict, ensure_ascii=False))
-    # print('any_dict', any_dict)
 
     return json.dumps(any_dict, ensure_ascii=False)
-    # any_dict = {
-    #     "sr_no": "",
-    #     "sr_act_text": "고객 : abc\nGS: 123",
-    #     "kwd_cust_origin": ["a", "b", "c"],
-    #     "kwd_cust_confirm": ["a", "b", "c"],
-    #     "kwd_gs_origin": ["1", "2", "3"],
-    #     "kwd_gs_confirm": ["1", "2", "3"],
-    #     "kwd_changed": False,
-    #     "tag_first_name": "111",
-    #     "tag_first_prob": 25.6,
-    #     "tag_second_name": "222",
-    #     "tag_second_prob": 2.3,
-    #     "tag_third_name": "333",
-    #     "tag_third_prob": 0.1,
-    #     "tag_confirm": 0.1,
-    #     "tag_changed": False
-    # }
+
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
@@ -66,7 +46,7 @@ def upload():
     f.save('./data/'+f.filename)
     #
     #TODO './data/sample.dat'
-    file_path = './data/sample.dat'
+    file_path = './data/'+f.filename
     print('''df_temp''')
     df_temp = raw_file_to_df(file_path, sr_cate_b_filter)
 
@@ -109,8 +89,6 @@ def upload():
     html = df_datatable.to_html( )
     print(html[:1000])
     return html
-    # return any_html
-# df.loc[df.sr_no == 'S074784807', 'sr_text']
 
 if __name__ == '__main__':
 

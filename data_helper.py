@@ -29,7 +29,7 @@ def raw_file_to_df(file_path, sr_cate_b_filter):
 
     #TODO 모든 column명 특히 한글에 대응하도록 reindex로 추후 바꿔야함
     # print(df.head())
-    print(df.columns.tolist())
+    # print(df.columns.tolist())
 
     df.columns = ['sr_no', 'sr_area', 'sr_channel', 'sr_cate_b', 'sr_cate_m', 'sr_cate_s', 'sr_text', 'ord_status', 'act_no',
      'act_text', 'act_status', 'act_cate', 'supp_ques', 'prd_cd', 'prd_nm', 'prd_desc', 'ord_cd', 'ord_date', 'supp_cd',
@@ -80,7 +80,6 @@ def raw_file_to_df(file_path, sr_cate_b_filter):
     df['customer_text'] = df.customer_text.apply(lambda x: _cleansing_raw_text_by_char_ver2(x))
     df['gs_text'] = df.gs_text.apply(lambda x: _cleansing_raw_text_by_char_ver2(x))
 
-    del sr_act_dict
     df = df.drop_duplicates(['sr_no']).reset_index(drop=True)
     return df
 
