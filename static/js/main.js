@@ -1,16 +1,94 @@
-$(document).ready(function() {
-    var table = $('#example').DataTable();
 
-    $('#example tbody').on( 'click', 'tr', function () {
-        if ( $(this).hasClass('selected') ) {
-            $(this).removeClass('selected');
+$('#sr_table tbody').on( 'click', 'tr', function () {
+
+    var table = $('#sr_table').DataTable();
+
+    if ( $(this).hasClass('selected') ) {
+        $(this).removeClass('selected');
+        $(this).addClass('selected');
+    }
+    else {
+        table.$('tr.selected').removeClass('selected');
+        $(this).addClass('selected');
+    }
+
+    var sr_no = $('tr.selected > td:nth-child(2)').text();
+    console.log("#sr_analysis_info");
+    console.log(sr_no);
+
+    $.ajax({
+        url: "/sr_analysis_info",
+        processData: false,
+        contentType: false,
+        type: "POST",
+        data : sr_no,
+        success : function(json_text){
+            var data = $.parseJSON(json_text);
+            // console.log(data);
+            setAnalysisBox(data);
+        },
+        error: function(err){
+          console.log(err);
         }
-        else {
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-        }
-    } );
+    })
 } );
+
+
+function setAnalysisBox(data){
+  console.log(data);
+  $('#first_tag').text(data.tag_first_name);
+  $('.first_per').text(data.tag_first_prob);
+
+  $('#second_tag').text(data.tag_second_name);
+  $('.second_per').text(data.tag_second_prob);
+
+  $('#third_tag').text(data.tag_third_name);
+  $('.third_per').text(data.tag_third_prob);
+
+  $('#customer_keywords').text(data.kwd_cust_confirm);
+  $('#gs_keywords').text(data.kwd_gs_confirm);
+
+
+  $('#cust_gs_text').text('고객 : '+data.customer_text +'\nGS : '+ data.gs_text);
+  // let key_arr = data.kwd_cust_origin;
+  // for(let i = 0; i < key_arr.length; i ++){
+  //   let tag = `<span class="amsify-select-tag col-bg" data-val="${key_arr[i]}">${key_arr[i]}<b class="amsify-remove-tag">✖</b></span>`;
+  //   $('#customer_tag').siblings('.amsify-suggestags-area').find('.amsify-suggestags-input-area-default').prepend(tag);
+  // }
+
+}
+// $(document).ready(function() {
+    // var table = $('#sr_table').DataTable();
+
+    // $('#sr_table tbody').on( 'click', 'tr', function () {
+    //     var table = $('#sr_table');
+    //     if ( $(this).hasClass('selected') ) {
+    //         $(this).removeClass('selected');
+    //         let this_sr_no = $('tr.selected').nth_child(2).val();
+    //         console.log("click");
+    //
+    //         $.ajax({
+    //             url: "{{ url_for('sr_analysis_info') }}",
+    //             processData: false,
+    //             contentType: false,
+    //             type: "POST",
+    //             data : {"sr_no" : this_sr_no},
+    //             dataType : 'json',
+    //             // success: function(data){
+    //             //   setAnalysisBox(data);
+    //             // },
+    //             error: function(err){
+    //               console.log('s');
+    //               console.log(err);
+    //             }
+    //           })
+    //     }
+    //     else {
+    //         table.$('tr.selected').removeClass('selected');
+    //         $(this).addClass('selected');
+    //     }
+    // } );
+// } );
 //  $(document).ready(function () {
 //  // var zip = (...rows) => [...rows[0]].map((_,c) => rows.map(row => row[c]));
 // function zip() {

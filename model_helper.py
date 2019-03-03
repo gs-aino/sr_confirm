@@ -51,7 +51,7 @@ def get_tags_and_prob(df):
 
 def _get_tags_and_prob(y_prob):
     y_pred = [y.argsort()[-3:][::-1] for y in y_prob]
-    y = [[y_dict[l[0]], y_prob[l[0]], y_dict[l[1]], y_prob[l[1]], y_dict[l[2]], y_prob[l[2]]] for l in y_pred]
+    y = [[y_dict[l[0]], y_prob[i, l[0]], y_dict[l[1]], y_prob[i, l[1]], y_dict[l[2]], y_prob[i, l[2]]] for i, l in enumerate(y_pred)]
     return np.array(y, dtype=object)
 
 

@@ -193,30 +193,30 @@
       }
     })
 
-    Vue.component('sr-component',{
-      template : "#srTemplate",
-      props : ['sr_data'],
-      methods : {
-        getSRData : function(data){
-          let sr_no = data.sr_no;
-          $.ajax({
-            url: "{{ url_for('sr_analysis_info') }}",
-            processData: false,
-            contentType: false,
-            type: "POST",
-            data : `{"sr_no" : ${sr_no}}`,
-            dataType : 'json',
-            success: function(data){
-              setAnalysisBox(data);
-            },
-            error: function(err){
-              console.log('s');
-              console.log(err);
-            }
-          })
-        }
-      }
-    });
+    {#Vue.component('sr-component',{#}
+    {#  template : "#srTemplate",#}
+    {#  props : ['sr_data'],#}
+    {#  methods : {#}
+    {#    getSRData : function(data){#}
+    {#      let sr_no = data.sr_no;#}
+    {#      $.ajax({#}
+    {#        url: "{{ url_for('sr_analysis_info') }}",#}
+    {#        processData: false,#}
+    {#        contentType: false,#}
+    {#        type: "POST",#}
+    {#        data : `{"sr_no" : ${sr_no}}`,#}
+    {#        dataType : 'json',#}
+    {#        success: function(data){#}
+    {#          setAnalysisBox(data);#}
+    {#        },#}
+    {#        error: function(err){#}
+    {#          console.log('s');#}
+    {#          console.log(err);#}
+    {#        }#}
+    {#      })#}
+    {#    }#}
+    {#  }#}
+    {#});#}
 
     function setAnalysisBox(data){
       console.log(data);
