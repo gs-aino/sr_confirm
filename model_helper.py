@@ -32,7 +32,19 @@ y_dict = {
 
 
 def get_tags_and_prob(df):
-    X_cust, X_gs, X = _make_dataset(df)
+    customer_corpus = df.customer_terms.tolist()
+    gs_corpus = df.gs_terms.tolist()
+    corpus = [x + y for x, y in zip(customer_corpus, gs_corpus)]
+
+    cust_vectorizer, gs_vectorizer, vectorizer = _load_vectorizers()
+
+    X_cust = cust_vectorizer.transform(customer_corpus).toarray()
+    X_gs = gs_vectorizer.transform(gs_corpus).toarray()
+    X = vectorizer.transform(corpus).toarray()
+
+    cust_vocab = {v: k for k, v in cust_vectorizer.vocabulary_.items()}
+    gs_vocab = {v: k for k, v in gs_vectorizer.vocabulary_.items()}
+
     model = _load_model()
     y_prob = model.predict_proba(X)
     result = _get_tags_and_prob(y_prob)
@@ -44,7 +56,8 @@ def get_tags_and_prob(df):
     df_tags["tag_second_prob"] = result[:, 3]
     df_tags["tag_third_name"] = result[:, 4]
     df_tags["tag_third_prob"] = result[:, 5]
-    # df_tags[["tag_first_name", "tag_first_prob", "tag_second_name", "tag_second_prob", "tag_third_name", "tag_third_prob"]]
+    df_tags["kwd_cust_origin"] = _get_kwds(X_cust, cust_vocab)
+    df_tags["kwd_gs_origin"] = _get_kwds(X_gs, gs_vocab)
 
     return df_tags
 
@@ -82,3 +95,12 @@ def _load_model():
     with open(model_config['model_path'], 'rb') as f:
         model = pickle.load(f)
     return model
+
+
+def _get_kwds(x_vecs, vocab):
+    kwds_list = []
+    for x_vec in x_vecs:
+        non_zero_cnt = np.count_nonzero(x_vec)
+        num_alpha = min(int(2 * non_zero_cnt / 3) + 1, 10)
+        kwds_list.append(" ".join([vocab[x] for x in x_vec.argsort()[-num_alpha:][::-1]]))
+    return kwds_list

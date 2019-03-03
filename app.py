@@ -61,54 +61,49 @@ def sr_analysis_info():
 def upload():
     global df_database
     sr_cate_b_filter = ['교환/반품/AS관련', '상품품질관련', '상품관련']
-    #
-    # f = request.files['userfile']
-    # f.save('./data/'+f.filename)
-    # #
-    # #TODO './data/sample.dat'
-    # file_path = './data/sample.dat'
-    # print('''df_temp''')
-    # df_temp = raw_file_to_df(file_path, sr_cate_b_filter)
-    #
-    # df_temp.to_pickle('./data/df_temp.pkl')
-    # df_temp = pd.read_pickle('./data/df_temp.pkl')
-    #
-    # print('''df_es''')
-    # df_es = get_analysed_keywords(df_temp[['sr_no', 'customer_text', 'gs_text']])
-    #
-    # df_es.to_pickle('./data/df_es.pkl')
-    # df_es = pd.read_pickle('./data/df_es.pkl')
-    #
-    # print('''df_tags''')
-    # df_tags = get_tags_and_prob(df_es[['sr_no',  'customer_terms', 'gs_terms']])
-    #
-    # df_tags.to_pickle('./data/df_tags.pkl')
-    # df_tags = pd.read_pickle('./data/df_tags.pkl')
-    # #
-    # rename_dict = {
-    #     "customer_terms": "kwd_cust_origin",
-    #     "gs_terms": "kwd_gs_origin"
-    # }
 
-    # print('''df_merge''')
-    # df = df_es.merge(df_tags, on=['sr_no'])
-    # df = df.rename(columns=rename_dict)
-    # df["kwd_cust_confirm"] = df["kwd_cust_origin"]
-    # df["kwd_gs_confirm"] = df["kwd_gs_origin"]
-    # df["tag_confirm"] = df["tag_first_name"]
-    # df["kwd_changed"] = False
-    # df["tag_changed"] = False
-    # # TODO 추출결과 별도의 df에 저장 pk(index == sr_no)
+    f = request.files['userfile']
+    f.save('./data/'+f.filename)
     #
-    # print('''df_database''')
-    # df_database = df_database.append(df)
-    # df_database.to_pickle('data/df_database/df_database_'+datetime.today().strftime('%Y%m%d')+".pkl")
+    #TODO './data/sample.dat'
+    file_path = './data/sample.dat'
+    print('''df_temp''')
+    df_temp = raw_file_to_df(file_path, sr_cate_b_filter)
+
+    df_temp.to_pickle('./data/df_temp.pkl')
+    df_temp = pd.read_pickle('./data/df_temp.pkl')
+
+    print('''df_es''')
+    df_es = get_analysed_keywords(df_temp[['sr_no', 'customer_text', 'gs_text']])
+
+    df_es.to_pickle('./data/df_es.pkl')
+    df_es = pd.read_pickle('./data/df_es.pkl')
+
+    print('''df_tags''')
+    df_tags = get_tags_and_prob(df_es[['sr_no',  'customer_terms', 'gs_terms']])
+
+    df_tags.to_pickle('./data/df_tags.pkl')
+    df_tags = pd.read_pickle('./data/df_tags.pkl')
     #
-    # print('''df_datatable''')
-    # df_datatable = df_temp.loc[df_temp['sr_cate_b'].isin(['교환/반품/AS관련', '상품품질관련', '상품관련']), datatable_cols].reset_index(drop=True)
-    # df_datatable = df_datatable.merge(df_tags[['sr_no', 'tag_first_name', 'tag_second_name', 'tag_third_name']],on=['sr_no'])
-    #
-    # df_datatable.to_pickle('./data/df_datatable.pkl')
+
+    print('''df_merge''')
+    df = df_es.merge(df_tags, on=['sr_no'])
+    df["kwd_cust_confirm"] = df["kwd_cust_origin"]
+    df["kwd_gs_confirm"] = df["kwd_gs_origin"]
+    df["tag_confirm"] = df["tag_first_name"]
+    df["kwd_changed"] = False
+    df["tag_changed"] = False
+    # TODO 추출결과 별도의 df에 저장 pk(index == sr_no)
+
+    print('''df_database''')
+    df_database = df_database.append(df)
+    df_database.to_pickle('data/df_database/df_database_'+datetime.today().strftime('%Y%m%d')+".pkl")
+
+    print('''df_datatable''')
+    df_datatable = df_temp.loc[df_temp['sr_cate_b'].isin(['교환/반품/AS관련', '상품품질관련', '상품관련']), datatable_cols].reset_index(drop=True)
+    df_datatable = df_datatable.merge(df_tags[['sr_no', 'tag_first_name', 'tag_second_name', 'tag_third_name']], on=['sr_no'])
+
+    df_datatable.to_pickle('./data/df_datatable.pkl')
     df_datatable = pd.read_pickle('./data/df_datatable.pkl')
 
     html = df_datatable.to_html( )
