@@ -1,4 +1,3 @@
-
 $('#sr_table tbody').on( 'click', 'tr', function () {
 
     var table = $('#sr_table').DataTable();
@@ -36,14 +35,17 @@ $('#sr_table tbody').on( 'click', 'tr', function () {
 
 function setAnalysisBox(data){
   console.log(data);
+
+  $('#tag_box').css("display", "block");
   $('#first_tag').text(data.tag_first_name);
-  $('.first_per').text(data.tag_first_prob);
+  $('.first_per').text(data.tag_first_prob.toFixed(2));
 
   $('#second_tag').text(data.tag_second_name);
-  $('.second_per').text(data.tag_second_prob);
+  $('.second_per').text(data.tag_second_prob.toFixed(2));
 
   $('#third_tag').text(data.tag_third_name);
-  $('.third_per').text(data.tag_third_prob);
+  $('.third_per').text(data.tag_third_prob.toFixed(2));
+
 
   $('#customer_keywords').text(data.kwd_cust_confirm);
   $('#gs_keywords').text(data.kwd_gs_confirm);

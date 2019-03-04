@@ -2,6 +2,9 @@
     font-size: small;
 }
 
+.top_table > tbody > tr > td {
+    vertical-align: middle;
+}
 /*.progress-bar.animate {*/
    /*width: 100%;*/
 /*}*/

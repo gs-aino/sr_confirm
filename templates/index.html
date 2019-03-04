@@ -33,46 +33,53 @@
   </head>
 
   <body>
-  <br><br>
+  <br>
     <div class="content" id="app">
       <div class="container">
-        <div class="row">
-          <br><br>
-          <div class="row navbar-static-top">
-            <h1>sr_confirm_prototype</h1>
-              <br><br>
-
-          </div>
-
-
-          <div class="container">
-            <table class="table text-center table-striped table-bordered">
+        <div class="row navbar-static-top"><h4>sr_confirm_prototype</h4></div>
+            <br>
+          <div class="row">
+            <table class="table text-center table-striped table-bordered top_table" >
               <thead>
                 <tr class="">
-                  <td class="width: 16%">본문</td>
-                  <td class="width: 66%">키워드</td>
-                  <td class="width: 30%">결과</td>
+                  <th style="width: 10%"></th>
+                  <th style="width: 70%">키워드</th>
+                  <th style="width: 20%">결과</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><h3>고객</h3></td>
+                  <td><h5>고객</h5></td>
                   <td>
-                    <h4 id="customer_keywords">
+                    <h5 id="customer_keywords">
 {#                      <input type="text" name="customer" id="customer객_tag" value="">#}
-                    </h4>
+                    </h5>
                   </td>
                   <td rowspan="3">
-                    <h6><button type="button" id="first_tag" class="btn btn-secondary btn-lg"></button><span class="first_per"></span></h6>
-                    <h6><button type="button" id="second_tag" class="btn btn-secondary btn-lg"></button><span class="second_per"></span></h6>
-                    <h6><button type="button" id="third_tag" class="btn btn-secondary btn-lg"></button><span class="third_per"></span></h6>
+                      <div id="tag_box" style="display: none">
+                        <h6><button type="button" id="first_tag" class="btn btn-secondary "></button> <span class="first_per"></span></h6>
+                        <h6><button type="button" id="second_tag" class="btn btn-secondary"></button> <span class="second_per"></span></h6>
+                        <h6><button type="button" id="third_tag" class="btn btn-secondary "></button> <span class="third_per"></span></h6>
+                        <select name="select_tag" id="select_tag" class="form-control">
+                            <option value="">기타선택</option>
+                            <option value="개수/중량문의">개수/중량문의</option>
+                            <option value="맛 불만족">맛 불만족</option>
+                            <option value="변질불만">변질불만</option>
+                            <option value="보관방법 문의">보관방법 문의</option>
+                            <option value="사과주스누락">사과주스누락</option>
+                            <option value="사이즈 문의">사이즈 문의</option>
+                            <option value="사이즈작음불만">사이즈작음불만</option>
+                            <option value="외관불량">외관불량</option>
+                        </select>
+                        <input type="text" id="sr_etc" size="20" class="form-control">
+                      </div>
                   </td>
 
                 </tr>
                 <tr>
-                  <td><h3>GS</h3></td>
+                  <td><h5>GS</h5></td>
                   <td>
-                    <h4 id="gs_keywords">
+                    <h5 id="gs_keywords">
 {#                      <span class="badge badge-primary">남여공용</span>#}
 {#                      <span class="badge badge-primary">여유</span>#}
 {#                      <span class="badge badge-primary">출시</span>#}
@@ -80,30 +87,26 @@
 {#                      <span class="badge badge-primary">사이즈</span>#}
 {#                      <span class="badge badge-primary">크</span>#}
 {#                      <span class="badge badge-primary">선택</span>#}
-                    </h4>
+                    </h5>
                   </td>
                 </tr>
                 <tr>
-                  <td><h3>본문</h3></td>
+                  <td><h5>본문</h5></td>
                   <td id="cust_gs_text"></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div>
-            <!-- <form action="/upload" method="post" enctype="multipart/form-data" id="upload_form"> -->
+          <div class="row">
             <form action="" method="post" enctype="multipart/form-data" id="upload_form">
               <input type="file" name="userfile" class="file_input"/>
             </form>
-            <button class="submit">파일 전송</button>
+            <button class="submit col-1">파일 전송</button>
+            <div class="col-6"></div>
+            <button class="confirm ">confirm</button>
 
-            <!-- <button class="btn">테스트</button> -->
           </div>
 
-
-
-{#          <sr-component :sr_data="sr_data"></sr-component>#}
-        </div>
       </div>
       <br><br><br>
       <div id="example" class="table display table-striped table-bordered" style="width:100%">

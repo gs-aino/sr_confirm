@@ -62,8 +62,8 @@ def raw_file_to_df(file_path, sr_cate_b_filter):
     df['supp_nm'] = df['supp_nm'].apply(lambda string: _remove_single_quotation(string))
     df['supp_ques'] = df['supp_ques'].apply(lambda string: _remove_single_quotation(string))
 
-    # df['sr_cate'] = None
-    # df['sr_cate'] = df.apply(lambda row: _make_sr_cate(row), axis=1)
+    df['sr_cate'] = None
+    df['sr_cate'] = df.apply(lambda row: _make_sr_cate(row), axis=1)
 
 
     #TODO 활동번호가 아니라 활동시간으로 변경
@@ -98,7 +98,7 @@ def _remove_single_quotation(string):
 
 
 def _make_sr_cate(row):
-    row['sr_cate'] = 'b : ' + row['sr_cate_b'] + '\nm : ' + row['sr_cate_m'] + '\ns : ' + row['sr_cate_s']
+    row['sr_cate'] = 'b : ' + row['sr_cate_b'] + ' / m : ' + row['sr_cate_m'] + ' / s : ' + row['sr_cate_s']
     return row['sr_cate']
 
 
