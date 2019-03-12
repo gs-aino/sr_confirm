@@ -51,7 +51,7 @@ function setAnalysisBox(data){
   $('#gs_keywords').text(data.kwd_gs_confirm);
 
 
-  $('#cust_gs_text').text('고객 : '+data.customer_text +'\nGS : '+ data.gs_text);
+  $('#cust_gs_text').html('고객 : '+data.customer_text + '<br> '+'GS : '+ data.gs_text );
   // let key_arr = data.kwd_cust_origin;
   // for(let i = 0; i < key_arr.length; i ++){
   //   let tag = `<span class="amsify-select-tag col-bg" data-val="${key_arr[i]}">${key_arr[i]}<b class="amsify-remove-tag">✖</b></span>`;
