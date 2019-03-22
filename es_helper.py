@@ -1,8 +1,7 @@
 import pandas as pd
-from elasticsearch5 import Elasticsearch
+from elasticsearch import Elasticsearch
+from elasticsearch.client import IndicesClient
 import json
-import logging
-from datetime import datetime
 from itertools import chain
 
 dt = '190301'
@@ -13,11 +12,11 @@ es_config = {
 }
 
 es = Elasticsearch(timeout=30)
-
+ic = IndicesClient(es)
 
 def get_analysed_keywords(df_raw):
     df = df_raw[es_config['FIELDS']]
-    body_list = [gen_bulk(row) for i, row in df.iterrows()]
+    body_list = [_gen_bulk(row) for i, row in df.iterrows()]
 
     count_list = [x for x in range(0, len(df), 5000)]
     count_list.append(len(df))
@@ -37,73 +36,86 @@ def get_analysed_keywords(df_raw):
     count_list.append(count)
     print("count: {}".format(count))
 
-    results = list()
-    results.append(es.search(index=es_config['ES_INDEX_NAME'], size=10000, scroll='1m'))
-    scroll_id = results[0]['_scroll_id']
-    data = [_get_necessary_data(result['_source']) for result in results[0]['hits']['hits']]
-    del results
+    customer_morphs_result_list = _get_morphs_result(df.customer_text.tolist())
+    gs_morphs_result_list = _get_morphs_result(df.gs_text.tolist())
 
-    print('''search data''')
-    for _ in range(count // 10000):
-        print('searching idx : {}'.format(_))
-        results = es.scroll(scroll_id=scroll_id, scroll='1m')['hits']['hits']
-        results = [_get_necessary_data(result['_source']) for result in results]
-        data.extend(results)
-        del results
+    df_es = pd.DataFrame()
+    df_es['sr_no'] = df.sr_no
 
-    print("data: {}".format(len(data)))
+    df_es['customer_terms'] = _get_terms_list(customer_morphs_result_list)
+    df_es['gs_terms'] = _get_terms_list(gs_morphs_result_list)
 
-    print('''convert to dataframe''')
-    df_es = pd.DataFrame(data)
-    del data
+    def morph_results_to_dhub()
 
-    df_es.sr_no = df_es.sr_no.astype('str')
-    # df.to_pickle('df_temp_text.pkl')
-
-    # df = pd.read_pickle('df_temp_text.pkl')
-    df_es['customer_terms'] = None
-    df_es['gs_terms'] = None
-    df_es = df_es.set_index('sr_no')
-
-    print('''get_mtermvectors''')
-    for idx in range(len(count_list) - 1):
-        print('idx : {}'.format(count_list[idx]))
-        ids = df_es.iloc[count_list[idx]:count_list[idx + 1]].index.tolist()
-        term_list = _get_mtermvectors(ids)
-        ids = []
-
-        temp_customer = []
-        for x in term_list:
-            ids.append(x['_id'])
-            if 'customer_text' in x['term_vectors'].keys():
-                temp_customer.append([x['term_vectors']['customer_text']['terms']])
-            else:
-                temp_customer.append(None)
-        df_es.loc[ids, 'customer_terms'] = temp_customer
-        df_es.loc[ids, 'customer_terms'] = df_es.loc[ids, 'customer_terms'].apply(lambda x: _sort_terms_vector_ver2(x))
-        del temp_customer
-
-        temp_gs = []
-        for x in term_list:
-            if 'gs_text' in x['term_vectors'].keys():
-                temp_gs.append([x['term_vectors']['gs_text']['terms']])
-            else:
-                temp_gs.append(None)
-        df_es.loc[ids, 'gs_terms'] = temp_gs
-        df_es.loc[ids, 'gs_terms'] = df_es.loc[ids, 'gs_terms'].apply(lambda x: _sort_terms_vector_ver2(x))
-        del term_list, temp_gs, ids
-
-        print('''reset_index df''')
-        df_es = df_es.reset_index()
-        print("df: {}".format(len(df_es)))
-
-        df_es.customer_terms = df_es.customer_terms.apply(lambda l: " ".join(l) if l is not None else None)
-        df_es.gs_terms = df_es.gs_terms.apply(lambda l: " ".join(l) if l is not None else None)
+    #
+    #
+    # results = list()
+    # results.append(es.search(index=es_config['ES_INDEX_NAME'], size=10000, scroll='1m'))
+    # scroll_id = results[0]['_scroll_id']
+    # data = [_get_necessary_data(result['_source']) for result in results[0]['hits']['hits']]
+    # del results
+    #
+    # print('''search data''')
+    # for _ in range(count // 10000):
+    #     print('searching idx : {}'.format(_))
+    #     results = es.scroll(scroll_id=scroll_id, scroll='1m')['hits']['hits']
+    #     results = [_get_necessary_data(result['_source']) for result in results]
+    #     data.extend(results)
+    #     del results
+    #
+    # print("data: {}".format(len(data)))
+    #
+    # print('''convert to dataframe''')
+    # df_es = pd.DataFrame(data)
+    # del data
+    #
+    # df_es.sr_no = df_es.sr_no.astype('str')
+    # # df.to_pickle('df_temp_text.pkl')
+    #
+    # # df = pd.read_pickle('df_temp_text.pkl')
+    # df_es['customer_terms'] = None
+    # df_es['gs_terms'] = None
+    # df_es = df_es.set_index('sr_no')
+    #
+    # print('''get_mtermvectors''')
+    # for idx in range(len(count_list) - 1):
+    #     print('idx : {}'.format(count_list[idx]))
+    #     ids = df_es.iloc[count_list[idx]:count_list[idx + 1]].index.tolist()
+    #     term_list = _get_mtermvectors(ids)
+    #     ids = []
+    #
+    #     temp_customer = []
+    #     for x in term_list:
+    #         ids.append(x['_id'])
+    #         if 'customer_text' in x['term_vectors'].keys():
+    #             temp_customer.append([x['term_vectors']['customer_text']['terms']])
+    #         else:
+    #             temp_customer.append(None)
+    #     df_es.loc[ids, 'customer_terms'] = temp_customer
+    #     df_es.loc[ids, 'customer_terms'] = df_es.loc[ids, 'customer_terms'].apply(lambda x: _sort_terms_vector_ver2(x))
+    #     del temp_customer
+    #
+    #     temp_gs = []
+    #     for x in term_list:
+    #         if 'gs_text' in x['term_vectors'].keys():
+    #             temp_gs.append([x['term_vectors']['gs_text']['terms']])
+    #         else:
+    #             temp_gs.append(None)
+    #     df_es.loc[ids, 'gs_terms'] = temp_gs
+    #     df_es.loc[ids, 'gs_terms'] = df_es.loc[ids, 'gs_terms'].apply(lambda x: _sort_terms_vector_ver2(x))
+    #     del term_list, temp_gs, ids
+    #
+    #     print('''reset_index df''')
+    #     df_es = df_es.reset_index()
+    #     print("df: {}".format(len(df_es)))
+    #
+    #     df_es.customer_terms = df_es.customer_terms.apply(lambda l: " ".join(l) if l is not None else None)
+    #     df_es.gs_terms = df_es.gs_terms.apply(lambda l: " ".join(l) if l is not None else None)
 
         return df_es
 
 
-def gen_bulk(row):
+def _gen_bulk(row):
     '''
     { "update" : {"_id" : message_id, "_type" : "_doc", "_index" : index_name, "retry_on_conflict" : 3} }
     { "doc" : {"field" : "value"} }
@@ -153,3 +165,27 @@ def _get_necessary_data(result):
     data["gs_text"] = result["gs_text"]
     data["customer_text"] = result["customer_text"]
     return data
+
+
+def _get_morphs_result(text_list):
+    morphs_result_list = []
+    body = {
+        "analyzer": "nori",
+        "explain": True
+    }
+    for text in text_list:
+        temp = []
+        body['text'] = text
+        result = ic.analyze(es_config['ES_INDEX_NAME'], body=body)
+        try:
+            temp = result['detail']['tokenfilters'][-1]['tokens']
+        except:
+            print(result)
+        finally:
+            morphs_result_list.append(temp)
+    return morphs_result_list
+
+
+def _get_terms_list(morphs_result_list):
+    return [" ".join([morph['token'] for morph in morphs if morph['posType'] in ['COMPOUND', None, 'MORPHEME']])
+            for morphs in morphs_result_list]
