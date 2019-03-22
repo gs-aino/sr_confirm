@@ -45,7 +45,8 @@ def get_analysed_keywords(df_raw):
     df_es['customer_terms'] = _get_terms_list(customer_morphs_result_list)
     df_es['gs_terms'] = _get_terms_list(gs_morphs_result_list)
 
-    def morph_results_to_dhub()
+    def morph_results_to_dhub():
+        return
 
     #
     #
